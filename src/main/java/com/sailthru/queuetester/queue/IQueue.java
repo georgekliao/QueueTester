@@ -10,11 +10,11 @@ public interface IQueue {
 
     public void subscribe();
 
-    public void subscribeEarlyAck();
+    public void subscribeLateAck();
 
     public Object pop();
 
-    public Object popEarlyAck();
+    public Object popLateAck();
 
     public boolean ack(Object obj);
 }

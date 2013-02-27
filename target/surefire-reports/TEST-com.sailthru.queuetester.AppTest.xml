@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite failures="0" time="0.018" errors="0" skipped="0" tests="1" name="com.sailthru.queuetester.AppTest">
+<testsuite failures="0" time="0.014" errors="0" skipped="0" tests="1" name="com.sailthru.queuetester.AppTest">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Libraries"/>
@@ -16,7 +16,6 @@
     <property name="user.country" value="US"/>
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="sun.os.patch.level" value="unknown"/>
-    <property name="test" value="com.sailthru.queuetester.AppTest"/>
     <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
     <property name="user.dir" value="/Users/georgekliao/dev/QueueTester"/>
     <property name="java.runtime.version" value="1.6.0_37-b06-434-11M3909"/>
@@ -35,9 +34,7 @@
     <property name="java.class.version" value="50.0"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="os.version" value="10.7.5"/>
-    <property name="jpda.listen" value="true"/>
     <property name="http.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
-    <property name="jpda.address" value="63604"/>
     <property name="user.home" value="/Users/georgekliao"/>
     <property name="user.timezone" value="America/New_York"/>
     <property name="java.awt.printerjob" value="apple.awt.CPrinterJob"/>
@@ -45,11 +42,10 @@
     <property name="file.encoding" value="MacRoman"/>
     <property name="user.name" value="georgekliao"/>
     <property name="java.class.path" value="/Applications/NetBeans/NetBeans 7.2.app/Contents/Resources/NetBeans/java/maven/boot/plexus-classworlds-2.4.jar"/>
-    <property name="maven.surefire.debug" value="-Xdebug -Xrunjdwp:transport=dt_socket,server=n,address=63604"/>
     <property name="java.vm.specification.version" value="1.0"/>
     <property name="sun.arch.data.model" value="64"/>
     <property name="java.home" value="/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home"/>
-    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher -Dtest=com.sailthru.queuetester.AppTest -DforkMode=once -Dmaven.surefire.debug=-Xdebug -Xrunjdwp:transport=dt_socket,server=n,address=63604 -Djpda.listen=true -Djpda.address=63604 test-compile surefire:test"/>
+    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher clean install"/>
     <property name="java.specification.vendor" value="Sun Microsystems Inc."/>
     <property name="user.language" value="en"/>
     <property name="awt.toolkit" value="apple.awt.CToolkit"/>
@@ -61,7 +57,6 @@
     <property name="maven.home" value="/Applications/NetBeans/NetBeans 7.2.app/Contents/Resources/NetBeans/java/maven"/>
     <property name="file.separator" value="/"/>
     <property name="java.vendor.url.bug" value="http://bugreport.apple.com/"/>
-    <property name="forkMode" value="once"/>
     <property name="sun.cpu.endian" value="little"/>
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="mrj.version" value="1070.1.6.0_37-434"/>

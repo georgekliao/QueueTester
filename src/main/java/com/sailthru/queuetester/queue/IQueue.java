@@ -6,15 +6,9 @@ package com.sailthru.queuetester.queue;
  */
 public interface IQueue {
 
-    public void publish(Object obj);
-
-    public void subscribe();
-
-    public void subscribeLateAck();
+    public void push(Object obj);
 
     public Object pop();
 
-    public Object popLateAck();
-
-    public boolean ack(Object obj);
+    public void subscribe();
 }

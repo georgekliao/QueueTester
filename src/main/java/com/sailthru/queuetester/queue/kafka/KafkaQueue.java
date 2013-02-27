@@ -4,6 +4,8 @@ import com.google.common.collect.ImmutableMap;
 import com.sailthru.queuetester.queue.IQueue;
 import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -55,52 +57,55 @@ public class KafkaQueue implements IQueue {
     }
 
     @Override
-    public void publish(Object obj) {
+    public void push(Object obj) {
+        System.out.println("Pushed: " + obj);
         ProducerData<String, String> data = new ProducerData<String, String>(queueName, obj.toString());
+
         producer.send(data);
     }
 
-    public void subscribe() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    public void subscribeLateAck() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
     public Object pop() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+        KafkaStream<Message> stream = streams.get(0);
+        Iterator iterator = stream.iterator();
 
-    public Object popLateAck() {
-        ExecutorService executor = Executors.newFixedThreadPool(4);
-        for (final KafkaStream<Message> stream : streams) {
-            executor.submit(new Runnable() {
-                public void run() {
-                    for (Object obj : stream) {
-                        MessageAndMetadata msgAndMetadata = (MessageAndMetadata) obj;
+        if (iterator.hasNext()) {
+            MessageAndMetadata msgAndMetadata = (MessageAndMetadata) iterator.next();
 
-                        Message message = (Message) msgAndMetadata.message();
-                        ByteBuffer payload = message.payload();
-                        byte[] bytes = new byte[payload.limit()];
-                        payload.get(bytes);
-                        try {
-                            System.out.println(new String(bytes, "UTF-8"));
-                        } catch (UnsupportedEncodingException ex) {
-                            Logger.getLogger(KafkaQueue.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                    }
-                }
-            });
+            Message message = (Message) msgAndMetadata.message();
+            ByteBuffer payload = message.payload();
+            byte[] bytes = new byte[payload.limit()];
+            payload.get(bytes);
+            try {
+                String string = new String(bytes, "UTF-8");
+                System.out.println("Popped: " + string);
+                return string;
+            } catch (UnsupportedEncodingException ex) {
+                Logger.getLogger(KafkaQueue.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
         }
 
         return null;
     }
 
-    public boolean ack(Object obj) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+    public void subscribe() {
+        for (final KafkaStream<Message> stream : streams) {
+            for (Object obj : stream) {
 
-    public void unack(Object obj) {
+                MessageAndMetadata msgAndMetadata = (MessageAndMetadata) obj;
+
+                Message message = (Message) msgAndMetadata.message();
+                ByteBuffer payload = message.payload();
+                byte[] bytes = new byte[payload.limit()];
+                payload.get(bytes);
+
+                try {
+                    String string = new String(bytes, "UTF-8");
+                    System.out.println("Popped: " + string);
+                } catch (Exception ex) {
+                    Logger.getLogger(KafkaQueue.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
     }
 }

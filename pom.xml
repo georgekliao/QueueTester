@@ -42,6 +42,12 @@
             <version>2.1.0</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>activemq-core</artifactId>
+            <version>5.7.0</version>
+        </dependency>
+
         <!-- mvn install:install-file -Dfile=kafka-0.7.2.jar -DgroupId=kafka -DartifactId=kafka -Dversion=0.7.2 -Dpackaging=jar -->
         <dependency>
             <groupId>kafka</groupId>

@@ -4,6 +4,7 @@
  */
 package com.sailthru.queuetester.test;
 
+import com.sailthru.queuetester.queue.IQueue;
 import java.util.Date;
 
 /**
@@ -11,7 +12,7 @@ import java.util.Date;
  * @author georgekliao
  */
 public abstract class AbstractTest {
-
+    private IQueue queue;
     private Date startTime;
     private Date endTime;
 
@@ -26,6 +27,14 @@ public abstract class AbstractTest {
 
         System.out.println("Test took: " + testTime + " milliseconds");
     }
+    
+    public IQueue getQueue() {
+        return this.queue;
+    }
 
     public abstract void run();
+    
+    public void setQueue(IQueue queue) {
+        this.queue = queue;
+    }
 }

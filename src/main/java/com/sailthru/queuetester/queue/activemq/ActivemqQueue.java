@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.sailthru.queuetester.queue.activemq;
 
 import com.sailthru.queuetester.queue.IQueue;
@@ -30,27 +26,21 @@ public class ActivemqQueue implements IQueue {
     MessageConsumer consumer;
     Session session;
 
-    public ActivemqQueue(String queueName) {
+    public ActivemqQueue(String queueName) throws JMSException {
+        ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory("tcp://localhost:6166");
+        Connection connection = connectionFactory.createConnection();
+        connection.start();
 
-        try {
-            ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory("tcp://localhost:61616");
-            Connection connection = connectionFactory.createConnection();
-            connection.start();
+        // Create a Session
+        session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
 
-            // Create a Session
-            session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+        // Create the destination (Topic or Queue)
+        Destination destination = session.createQueue(queueName);
 
-            // Create the destination (Topic or Queue)
-            Destination destination = session.createQueue(queueName);
+        producer = session.createProducer(new ActiveMQQueue(queueName));
+        producer.setDeliveryMode(DeliveryMode.PERSISTENT);
 
-            producer = session.createProducer(new ActiveMQQueue(queueName));
-            producer.setDeliveryMode(DeliveryMode.PERSISTENT);
-
-            consumer = session.createConsumer(destination);
-
-        } catch (Exception e) {
-        }
-
+        consumer = session.createConsumer(destination);
     }
 
     public void push(Object obj) {

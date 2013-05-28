@@ -26,8 +26,8 @@ public class ActivemqQueue implements IQueue {
     MessageConsumer consumer;
     Session session;
 
-    public ActivemqQueue(String queueName) throws JMSException {
-        ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory("tcp://localhost:6166");
+    public ActivemqQueue(String host, String queueName) throws JMSException {
+        ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory("tcp://" + host + ":6166");
         Connection connection = connectionFactory.createConnection();
         connection.start();
 
@@ -45,8 +45,7 @@ public class ActivemqQueue implements IQueue {
 
     public void push(Object obj) {
         try {
-            TextMessage message = session.createTextMessage(obj.toString());
-            System.out.println("Sending: " + obj.toString());
+            TextMessage message = session.createTextMessage(obj.toString());            
             producer.send(message);
         } catch (JMSException ex) {
             Logger.getLogger(ActivemqQueue.class.getName()).log(Level.SEVERE, null, ex);
@@ -60,11 +59,8 @@ public class ActivemqQueue implements IQueue {
             if (message instanceof TextMessage) {
                 TextMessage textMessage = (TextMessage) message;
                 String text = textMessage.getText();
-                System.out.println("Received: " + text);
 
                 return text;
-            } else {
-                System.out.println("Received: " + message);
             }
         } catch (Exception ex) {
             Logger.getLogger(ActivemqQueue.class.getName()).log(Level.SEVERE, null, ex);
@@ -81,13 +77,10 @@ public class ActivemqQueue implements IQueue {
                         TextMessage textMessage = (TextMessage) message;
                         String text;
                         try {
-                            text = textMessage.getText();
-                            System.out.println("Received: " + text);
+                            text = textMessage.getText();                            
                         } catch (JMSException ex) {
                             Logger.getLogger(ActivemqQueue.class.getName()).log(Level.SEVERE, null, ex);
                         }
-                    } else {
-                        System.out.println("Received: " + message);
                     }
                 }
             });

@@ -10,9 +10,9 @@ import com.sailthru.queuetester.queue.redis.RedisQueue;
  * @author maxenglander
  */
 public class QueueFactory {
-    public static IQueue create(String type, String name) throws Exception {
+    public static IQueue create(String type, String host, String name) throws Exception {
         if(type.equals("amq")) {
-            return new ActivemqQueue(name);
+            return new ActivemqQueue(host, name);
         }
         if(type.equals("kafka")) {
             return new KafkaQueue(name);
